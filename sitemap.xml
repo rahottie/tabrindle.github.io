@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>http://trevorbrindle.com/working-from-home/</loc>
+    <lastmod>2017-12-29T13:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/using-react-and-jsx-inside-extjs/</loc>
+    <lastmod>2017-06-15T13:36:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/static-sites-with-hugo/</loc>
+    <lastmod>2017-06-07T14:38:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/integration-with-fastlane-part-1/</loc>
+    <lastmod>2017-05-22T12:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/staffing-your-team-the-math-behind-it/</loc>
+    <lastmod>2016-02-09T13:46:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/sencha-touch-extjs-with-es6/</loc>
+    <lastmod>2016-02-08T18:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/fixing-senchas-loading-spinner/</loc>
+    <lastmod>2015-05-20T18:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/chrome-43-broke-sencha/</loc>
+    <lastmod>2015-04-28T18:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/an-open-letter-to-technical-recruiters/</loc>
+    <lastmod>2014-07-08T18:00:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/the-argument-for-hybrid-mobile-apps/</loc>
+    <lastmod>2014-04-23T21:51:00-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/blog/</loc>
+    <lastmod>2017-12-29T13:00:00-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://trevorbrindle.com/</loc>
+    <lastmod>2017-12-29T13:00:00-05:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

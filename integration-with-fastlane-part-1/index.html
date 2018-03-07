@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<meta name="author" content="Trevor Brindle">
+<meta name="description" content="Hockeyapp Hockeyapp is an awesome service provided by Microsoft, mainly for internal application distribution. You can also integrate code push, and crash reports, and all sorts of other really nifty things. Integration with Hockeyapp is quite easy with Fastlane, as there is a dedicated action built in. You simply call hockey in your fastfile, provid it some config, and you&rsquo;re off. Using lane context, you can minimize the amount of config you have to pass, especially if you call it right after gym.">
+
+<meta property="og:title" content="Integration with Fastlane: Part 1 - Hockeyapp" />
+<meta property="og:description" content="Hockeyapp Hockeyapp is an awesome service provided by Microsoft, mainly for internal application distribution. You can also integrate code push, and crash reports, and all sorts of other really nifty things. Integration with Hockeyapp is quite easy with Fastlane, as there is a dedicated action built in. You simply call hockey in your fastfile, provid it some config, and you&rsquo;re off. Using lane context, you can minimize the amount of config you have to pass, especially if you call it right after gym." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://trevorbrindle.com/integration-with-fastlane-part-1/" />
+
+
+
+<meta property="article:published_time" content="2017-05-22T12:00:00-05:00"/>
+
+<meta property="article:modified_time" content="2017-05-22T12:00:00-05:00"/>
+
+
+
+
+
+
+
+
+
+
+
+
+<title>
+
+
+     Integration with Fastlane: Part 1 - Hockeyapp 
+
+</title>
+<link rel="canonical" href="http://trevorbrindle.com/integration-with-fastlane-part-1/">
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Ubuntu+Mono:400,400i,700,700i|Raleway:500">
+
+
+
+    
+    <link rel="stylesheet" href="http://trevorbrindle.com/css/reset.css?t=2018-03-07%2018%3a45%3a13.408672758%20%2b0000%20UTC%20m%3d%2b0.056299949">
+    <link rel="stylesheet" href="http://trevorbrindle.com/css/pygments.css?t=2018-03-07%2018%3a45%3a13.408672758%20%2b0000%20UTC%20m%3d%2b0.056299949">
+    <link rel="stylesheet" href="http://trevorbrindle.com/css/main.css?t=2018-03-07%2018%3a45%3a13.408672758%20%2b0000%20UTC%20m%3d%2b0.056299949">
+    
+        <link rel="stylesheet" href="http://trevorbrindle.com/css/override.css?t=2018-03-07%2018%3a45%3a13.408672758%20%2b0000%20UTC%20m%3d%2b0.056299949">
+    
+
+
+
+
+<link rel="shortcut icon"
+
+    href="http://trevorbrindle.com/img/leaf.ico"
+
+>
+
+
+
+
+</head>
+
+
+<body lang="en">
+
+<section class="header">
+    <div class="container">
+        <div class="content">
+            
+                
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+                <a href="http://trevorbrindle.com/"><img class="avatar" src="http://trevorbrindle.com/img/profile.jpg" srcset="http://trevorbrindle.com/img/profile.jpg 1x"></a>
+            
+            <a href="http://trevorbrindle.com/"><div class="name">Trevor Brindle</div></a>
+            
+            <nav>
+                <ul>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<section class="icons">
+    <div class="container">
+        <div class="content">
+
+        
+            <a href="//github.com/tabrindle" target="_blank" rel="noopener"><img class="icon" src="http://trevorbrindle.com/img/github.svg" alt="github" /></a>
+        
+
+        
+            <a href="//twitter.com/vincekerrazzi" target="_blank" rel="noopener"><img class="icon" src="http://trevorbrindle.com/img/twitter.svg" alt="twitter" /></a>
+        
+
+        
+
+        
+            <a href="//linkedin.com/in/trevorbrindle" target="_blank" rel="noopener"><img class="icon" src="http://trevorbrindle.com/img/linkedin.svg" alt="linkedin" /></a>
+        
+
+        
+
+        
+
+        
+            <a href="mailto:tabrindle@gmail.com"><img class="icon" src="http://trevorbrindle.com/img/email.svg" alt="email" /></a>
+        
+
+        
+            <a href="http://trevorbrindle.com/index.xml"><img class="icon" src="http://trevorbrindle.com/img/rss.svg" alt="rss" /></a>
+        
+        
+        </div>
+    </div>
+</section>
+
+
+<section class="main post non-narrow zero-top-spacing">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    Integration with Fastlane: Part 1 - Hockeyapp
+
+</div>
+
+                    <div class="initials"><a href="http://trevorbrindle.com"></a></div>
+                </div>
+                <div class="meta">
+                    
+                    <div class="date" title='Mon May 22 2017 12:00:00 -0500'>May 22, 2017</div>
+                    
+                    
+		    <div class="reading-time"><div class="middot"></div>4 minutes read</div>
+                    
+                </div>
+            </div>
+            <div class="markdown">
+                
+
+<h2 id="hockeyapp">Hockeyapp</h2>
+
+<p>Hockeyapp is an awesome service provided by Microsoft, mainly for internal application distribution.
+You can also integrate code push, and crash reports, and all sorts of other really nifty things.
+Integration with Hockeyapp is quite easy with Fastlane, as there is a dedicated action built
+in. You simply call <code>hockey</code> in your fastfile, provid it some config, and you&rsquo;re off. Using lane
+context, you can minimize the amount of config you have to pass, especially if you call it right
+after <code>gym</code>. Gym provides a lot of the necessary information, by design.</p>
+
+<p>Your build flow could be as simple as this:</p>
+
+<pre><code>lane :alpha do
+    sigh
+    gym
+    hockey
+  end    
+</code></pre>
+
+<p>Keep in mind here, you will probably have to add some configuration in your gymfile, and possibly pass
+in environement variables for the Hockeyapp API keys.</p>
+
+<p>Or in my case where sometimes there are a bunch of other processes in between, or may need to be done
+at a different time than the build, one can pull from a common build folder, where builds are archived by date.</p>
+
+<p>In this example, we are pulling from a build folder, and adding release notes based on the build number
+and branch. Environment variables like BUILD_NUMBER are often injected by CI tools, like in this case, Jenkins.</p>
+
+<pre><code>  lane :hockeyapp do |options|
+    date = Time.now.strftime('%F')
+    time = Time.now.strftime('%T')
+    build_number = ENV[&quot;BUILD_NUMBER&quot;] ? &quot;Build &quot; + ENV[&quot;BUILD_NUMBER&quot;] : &quot;&quot;
+    hockey(
+      ipa: &quot;build/#{date}/app-development.ipa&quot;,
+      dsym: &quot;build/#{date}/app-development.app.dSYM.zip&quot;,
+      notes: &quot;#{build_number} From #{git_branch} branch on #{date} at #{time}&quot;,
+      notify: &quot;0&quot;
+    )
+  end
+</code></pre>
+
+<p>This way, there can be two hockeyapp lanes - one for each platform, which can be invoked and work
+regardless of how the project was built: Via command line with whatever framework you use, through
+your IDE like Xcode or Android Studio, directly through build tools like xcodebuild or gradle, or
+even fastlane itself.</p>
+
+<h2 id="builds">Builds</h2>
+
+<p>In order to easily maintain an archive of builds, in all of my projects, a .gitignore&rsquo;d folder in the project&rsquo;s
+root called &ldquo;builds&rdquo;. This is useful for decoupling all of the Fastlane commands so that they can be use all
+together, or only parts.</p>
+
+<p>Example build directory:</p>
+
+<pre><code>├── 2017-05-01
+│   ├── app-development.app.dSYM.zip
+│   ├── app-development.ipa
+│   └── app-debug.apk
+└── 2017-05-07
+    ├── app-development.app.dSYM.zip
+    ├── app-development.ipa
+    └── app-debug.apk
+</code></pre>
+
+<h2 id="react-native">React Native</h2>
+
+<p>Another amazing OSS project that moves very quickly is React Native, and itworks very well with Fastlane.
+At heart, React Native projects are just iOS and Android projects, but there are a couple gotchas that
+you will need to take care of for them to work with Hockeyapp.</p>
+
+<p>React Native bundles all of its JavaScript into a file called <code>main.jsbundle</code>, but currently the bundler
+<a href="https://github.com/facebook/react-native/issues/14400">does not allow much configuration</a>, as all the
+config is tied to the native project&rsquo;s build process There are work arounds, but the crux of it is,
+the bundler has to be set to create an offline JS bundle rather than relying on a development server, and
+you have to build with a non-release certificate for iOS and no signing for Android.</p>
+
+<p>On iOS, this means using an ad-hoc signing certificate, otherwise the Release configuration will choose an appstore
+profile. Even though this is not actually being released to the appstore, we must choose the release
+configuration so that an offline jsbundle is created.</p>
+
+<pre><code>  lane :development_build do
+    match(type: 'adhoc')
+    gym(
+      clean: true,
+      configuration: &quot;Release&quot;,
+      export_method: 'ad-hoc',
+      include_bitcode: false,
+      include_symbols: true,
+      output_directory: &quot;build/&quot; + Time.now.strftime('%F'),
+      output_name: &quot;app-development.ipa&quot;
+    )
+  end
+</code></pre>
+
+<p>For Android, you have to modify the <code>$PROJECT/android/app/build.gradle</code> file to add this:</p>
+
+<pre><code>if ( project.hasProperty(&quot;bundleInDebug&quot;) ) {
+    project.ext.react = [
+        bundleInDebug: true
+    ]
+}
+</code></pre>
+
+<p>This allows you to optionally tell the bundler to create an offline bundle for a debug build. Then we can
+use Fastlane to call gradle like this:</p>
+
+<pre><code>  gradle(
+      task: &quot;assemble&quot;,
+      build_type: &quot;Debug&quot;,
+      project_dir: &quot;android&quot;,
+      properties: {
+        &quot;bundleInDebug&quot; =&gt; true
+      }
+  )
+</code></pre>
+
+<p>Notice here we can actually choose the Debug build_type, as we have also passed in the bundleInDebug hasProperty
+that will trigger that new block in the build.gradle to create an offline bundle.</p>
+
+<p>Of note, I have submitted an issue on GitHub for React Native (as referenced above) to possibly solve these
+issues in the tooling. Once that is resolved, setting up Hockeyapp for React Native should be a lot easier!</p>
+
+<p><strong>If anyone has an easier way of doing this, or spots a typo, drop me a line!</strong></p>
+
+<p>For more examples of other parts of Fastlane, please take a look at <a href="https://github.com/fastlane/examples">Fastlane Examples</a>
+on GitHub.</p>
+
+                <br>
+		<p><a href="http://trevorbrindle.com/blog/">Back to posts</a></p>
+            </div>
+            <br>
+            <div class="disqus">
+                <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "trevorbrindle-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  
+
+  <script type="text/javascript">
+    hljs.initHighlightingOnLoad();
+  </script>
+
+
+
+
+</body>
+</html>
+
